@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ang streak po please</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap">
+<style>
+:root{--bg:#1d0b2e;--ink:#fff4ec;--pink:#ff3d7f;--cyan:#2de2e6;--flame:#ff9a3c;--mute:#c9b5d9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+main{max-width:460px;width:100%}
+.flame{width:120px;height:150px;margin:0 auto 8px;filter:drop-shadow(-4px 0 0 var(--cyan)) drop-shadow(4px 0 0 var(--pink));animation:flick 1.6s ease-in-out infinite;transform-origin:50% 100%}
+.done .flame{animation:none}
+@keyframes flick{0%,100%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.06,1.1) rotate(1.5deg)}}
+h1{font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;margin:12px 0 14px;font-weight:800;letter-spacing:-.02em}
+p{color:var(--mute);font-size:1.1rem;line-height:1.5;margin:0 auto 24px;max-width:36ch}
+.clock{font-size:2.2rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--cyan)}
+.clock-label{font-size:.95rem;color:var(--mute);margin:0 0 28px}
+button,a.btn{display:block;width:100%;font:inherit;font-weight:800;font-size:1.2rem;padding:18px;border-radius:999px;border:0;cursor:pointer;text-decoration:none}
+button{background:var(--pink);color:#fff;margin-bottom:12px;transition:transform .15s}
+button:active{transform:scale(.97)}
+a.btn{background:transparent;color:var(--ink);border:2px solid var(--mute)}
+button:focus-visible,a.btn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.done button{background:var(--cyan);color:var(--bg)}
+@media (prefers-reduced-motion:reduce){.flame{animation:none}}
+</style>
+</head>
+<body>
+<main id="app">
+  <svg class="flame" viewBox="0 0 120 150" aria-hidden="true">
+    <path d="M60 4C64 34 100 52 100 98c0 28-18 48-40 48S20 126 20 98c0-20 10-32 18-42 2 14 8 20 14 22C48 52 52 28 60 4Z" fill="#ff9a3c"/>
+    <path d="M60 70c4 18 24 26 24 48 0 14-10 24-24 24s-24-10-24-24c0-12 8-18 14-26 2 8 6 10 8 10-2-14 0-22 2-32Z" fill="#fff4ec"/>
+  </svg>
+  <h1 id="title">Hey mag send ka nman streak boi</h1>
+  <p id="msg">"Ubos na restore ohhh maawa ka naman pag yan nawala di ko na bubuhayin yan"</p>
+  <div class="clock" id="clock">--:--:--</div>
+  <p class="clock-label">Eto oras hanggang 12 midnight </p>
+  <button id="btn" type="button">Nays wan</button>
+  <a class="btn" href="https://www.tiktok.com" target="_blank" rel="noopener">Open mo na tiktok mo, tabangan taka na. Dali na click mo ni</a>
+</main>
+<script>
+var app=document.getElementById('app'),btn=document.getElementById('btn'),
+title=document.getElementById('title'),msg=document.getElementById('msg'),clock=document.getElementById('clock');
+function today(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function load(){try{return localStorage.getItem('streakDone')===today();}catch(e){return false;}}
+function save(v){try{if(v)localStorage.setItem('streakDone',today());else localStorage.removeItem('streakDone');}catch(e){}}
+var done=load();
+function render(){
+  app.className=done?'done':'';
+  title.textContent=done?'Streak saved for today.':"Don't let our streak die.";
+  msg.textContent=done?'Nice. Come back tomorrow and do it again.':'You always forget. Send me something on TikTok before midnight. Even a dumb one counts.';
+  btn.textContent=done?'Undo':'I sent it today';
+}
+btn.addEventListener('click',function(){done=!done;save(done);render();});
+function tick(){
+  var n=new Date(),m=new Date(n);m.setHours(24,0,0,0);
+  var s=Math.floor((m-n)/1000),h=Math.floor(s/3600),mi=Math.floor(s%3600/60),se=s%60;
+  clock.textContent=[h,mi,se].map(function(x){return String(x).padStart(2,'0');}).join(':');
+  if(done&&!load()){done=false;render();}
+}
+render();tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
