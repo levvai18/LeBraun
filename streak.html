@@ -35,7 +35,7 @@ button:focus-visible,a.btn:focus-visible{outline:3px solid var(--cyan);outline-o
     <path d="M60 70c4 18 24 26 24 48 0 14-10 24-24 24s-24-10-24-24c0-12 8-18 14-26 2 8 6 10 8 10-2-14 0-22 2-32Z" fill="#fff4ec"/>
   </svg>
   <h1 id="title">Hey mag send ka nman streak boi</h1>
-  <p id="msg">"Ubos na restore ohhh maawa ka naman pag yan nawala di ko na bubuhayin yan"</p>
+  <p id="msg">Ubos na restore ohhh maawa ka naman pag yan nawala di ko na bubuhayin yan</p>
   <div class="clock" id="clock">--:--:--</div>
   <p class="clock-label">Eto oras hanggang 12 midnight </p>
   <button id="btn" type="button">Nays wan</button>
@@ -51,7 +51,7 @@ var done=load();
 function render(){
   app.className=done?'done':'';
   title.textContent=done?'Streak saved for today.':"Don't let our streak die.";
-  msg.textContent=done?'Nice. Come back tomorrow and do it again.':'You always forget. Send me something on TikTok before midnight. Even a dumb one counts.';
+  msg.textContent=done?'Ubos na restore ohhh maawa ka naman pag yan nawala di ko na bubuhayin yan';
   btn.textContent=done?'Undo':'I sent it today';
 }
 btn.addEventListener('click',function(){done=!done;save(done);render();});
